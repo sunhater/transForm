@@ -1,0 +1,236 @@
+.tf-select .tf-selected {
+    background: #fff;
+    border: 1px solid #fba121;
+    border-radius: 5px 0 0 5px;
+}
+.tf-select .tf-right {
+    background: #fff;
+    border: 1px solid #fba121;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+}
+.tf-select .tf-selected,
+.tf-select .tf-menu div,
+.tf-select .tf-right {
+    padding: 3px 5px;
+}
+
+.tf-select .tf-menu {
+    border: 1px solid #fba121;
+    background: #fff;
+    border-radius: 0 0 5px 5px;
+}
+
+.tf-select.tf-opened .tf-selected {
+    border-radius: 5px 0 0 0;
+}
+
+.tf-select.tf-opened .tf-right {
+    border-radius: 0 5px 0 0;
+}
+
+
+
+table.form button,
+table.form .button,
+table.form input[type="button"],
+table.form input[type="reset"],
+table.form input[type="submit"] {
+    margin: 2px;
+}
+
+div.checker,
+div.radio,
+div.uploader span.filename,
+div.selector,
+option,
+textarea,
+input.text,
+input.password,
+input[type="text"],
+input[type="password"] {
+    background: #fff;
+}
+
+div.selector,
+div.checker,
+div.radio,
+div.uploader span.filename,
+textarea,
+input.text,
+input.password,
+input[type="text"],
+input[type="password"] {
+    border-color: #54B0E0;
+    box-shadow: inset 0 0 2px #54B0E0;
+    background: #fff url('img/uniform-field-normal.png') center center repeat-x;
+    background: -webkit-gradient(linear, left top, left bottom, from(#D2EAF6), to(#ffffff));
+    background: -o-linear-gradient(top, #D2EAF6, #ffffff);
+    background: -moz-linear-gradient(top, #D2EAF6, #ffffff);
+}
+textarea {
+    background-position: center top;
+}
+
+div.selector.focus,
+div.radio.focus,
+div.uploader.focus,
+div.uploader.focus span.filename,
+textarea:focus,
+input.text:focus,
+input.password:focus,
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #fba121;
+    box-shadow: inset 0 0 2px #fba121;
+    background-image: url('img/uniform-field-focus.png');
+    background: -webkit-gradient(linear, left top, left bottom, from(#fee9ca), to(#ffffff));
+    background: -o-linear-gradient(top, #fee9ca, #ffffff);
+    background: -moz-linear-gradient(top, #fee9ca, #ffffff);
+}
+
+div.uploader span.action {
+    border-left: 1px solid #82a7c4;
+}
+
+div.uploader span,
+div.selector span,
+label,
+textarea,
+input.text,
+input.password,
+input[type="text"],
+input[type="password"] {
+    color: #307AAC;
+}
+
+div.radio span.checked {
+    background: #307AAC;
+    border-color: #307AAC;
+}
+
+div.selector.focus span,
+div.uploader.focus span.filename,
+textarea:focus,
+input.text:focus,
+input.password:focus,
+input[type="text"]:focus,
+input[type="password"]:focus {
+    color: #000;
+}
+
+div.uploader span.action,
+div.radio:active,
+div.radio.active {
+    background: #e7e7e7;
+}
+
+div.checker span.checked {
+    background: transparent url('img/uniform.gif') top left no-repeat;
+}
+
+div.selector span {
+    background: transparent url('img/uniform.gif') right -25px no-repeat;
+}
+
+div.selector.hover span {
+    background-position: right -51px;
+}
+
+div.selector.focus span {
+    background-position: right -77px;
+}
+
+div.checker,
+div.radio {
+    background: -moz-linear-gradient(top, #ffffff, #D2EAF6);
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#D2EAF6));
+    background: -o-linear-gradient(top, #ffffff, #D2EAF6);
+}
+
+div.selector:active,
+div.selector.active
+div.checker:active,
+div.checker.active,
+div.radio:active,
+div.radio.active {
+    background: -moz-linear-gradient(top, #D2EAF6, #ffffff);
+    background: -webkit-gradient(linear, left top, left bottom, from(#D2EAF6), to(#ffffff));
+    background: -o-linear-gradient(top, #D2EAF6, #ffffff);
+}
+
+div.selector, div.uploader, div.checker, textarea,
+input.text,
+input.password,
+input[type="text"],
+input[type="password"] {
+    border-radius: 3px;
+}
+
+div.uploader {
+    border-color:#54B0E0;
+}
+
+div.uploader span.action {
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    background: url('img/uniform-file-button-normal.png') center center;
+    border-left: 1px solid #54B0E0;
+    color: #fff;
+    text-shadow:
+        1px 0 rgba(0,0,0,.2),
+        -1px 0 rgba(0,0,0,.2),
+        0 -1px rgba(0,0,0,.2),
+        0 1px rgba(0,0,0,.2),
+        1px 1px rgba(0,0,0,.2),
+        -1px -1px rgba(0,0,0,.2),
+        1px -1px rgba(0,0,0,.2),
+        -1px 1px rgba(0,0,0,.2);
+}
+
+div.uploader:hover span.action {
+    background-image: url('img/uniform-file-button-hover.png');
+}
+
+div.uploader.focus span.action {
+    background-image: url('img/uniform-file-button-focus.png');
+    border-left: 1px solid #fba121;
+}
+
+div.uploader span.filename {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    width:135px;
+}
+
+div.selector span {
+    padding-left:4px;
+}
+
+::-webkit-input-placeholder {
+    color: #abc7d6;
+}
+:-moz-placeholder {
+    color: #54B0E0;
+}
+::-moz-placeholder {
+    color: #54B0E0;
+}
+:-ms-input-placeholder {
+    color: #abc7d6;
+}
+:focus::-webkit-input-placeholder {
+    color: #f3c889;
+}
+:focus:-moz-placeholder {
+    color: #fba121;
+}
+:focus::-moz-placeholder {
+    color: #fba121;
+}
+:focus:-ms-input-placeholder {
+    color: #f3c889;
+}
+div.selector .ui-icon {
+    background:none;
+}

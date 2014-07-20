@@ -1,0 +1,35 @@
+.tf-select {
+    cursor: default;
+    overflow: auto;
+    display: -moz-inline-box;
+    display: inline-block;
+    zoom: 1;
+    vertical-align: middle;
+}
+
+.tf-select .tf-selected {
+    float: left;
+    white-space: nowrap;
+}
+
+.tf-select .tf-menu {
+    display: none;
+    position: absolute;
+    max-height: 300px;
+    overflow: auto;
+}
+
+.tf-select.tf-opened .tf-menu {
+    display: block;
+}
+
+.tf-select .tf-right {
+    float: left;
+    width: 1em;
+}
+
+.tf-select select {
+    position: fixed;
+    top: -1000px;
+}
+

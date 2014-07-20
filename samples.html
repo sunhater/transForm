@@ -1,0 +1,133 @@
+<html>
+
+  <head>
+    <link type="text/css" rel="stylesheet" href="css/transForm-base.css" />
+    <link type="text/css" rel="stylesheet" href="css/transForm-theme.css" />
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="transForm.js" type="text/javascript"></script>
+    <style type="text/css">
+fieldset {
+    float: left;
+}
+    </style>
+    <script type="text/javascript">
+$(function() {
+    $('form').transForm();
+    var transformed = true;
+    $('#toggle').click(function() {
+        if (transformed)
+            $('form').transForm(false);
+        else
+            $('form').transForm();
+        transformed = !transformed;
+    });
+});
+    </script>
+  </head>
+
+  <body>
+    <form action="ddd" enctype="multipart/form-data">
+
+      <fieldset>
+        <legend>Normal</legend>
+        <table>
+          <tr>
+            <td colspan="2"><input type="a" placeholder="Placeholder" value="Text box" /></td>
+          </tr>
+          <tr>
+            <td colspan="2"><input type="file" /></td>
+          </tr>
+          <tr>
+            <td style="white-space: nowrap"><select>
+              <option value="1">Option 1</option>
+              <option value="2" selected>Option 2</option>
+              <option value="3">Option 3</option>
+              <option value="4">Option 4xxxxxxxxxxxx</option>
+              <option value="5">Option 5</option>
+            </select></td>
+            <td><input type="checkbox" checked id="ch1" /><label for="ch1">Check box</label></td>
+          </tr>
+          <tr>
+            <td><select multiple>
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+              <option value="4">Option 4</option>
+              <option value="5">Option 5</option>
+            </select></td>
+            <td>
+              <input type="radio" name="nra" id="ra11" value="1" checked><label for="ra11">Value 1</label><br />
+              <input type="radio" name="nra" id="ra12" value="1"><label for="ra12">Value 2</label><br />
+              <input type="radio" name="nra" id="ra13" value="1"><label for="ra13">Value 3</label><br />
+              <input type="radio" name="nra" id="ra14" value="1"><label for="ra14">Value 4</label><br />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2"><textarea>Text area</textarea></td>
+          </tr>
+          <tr>
+            <td colspan="2"><button>Button</button></td>
+          </tr>
+        </table>
+      </fieldset>
+
+      <fieldset disabled>
+        <legend>Disabled</legend>
+        <table>
+          <tr>
+            <td colspan="2"><input type="text" placeholder="Placeholder" value="Text box" disabled /></td>
+          </tr>
+          <tr>
+            <td colspan="2"><input type="file" disabled /></td>
+          </tr>
+          <tr>
+            <td><select disabled>
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+              <option value="4">Option 4</option>
+              <option value="5">Option 5</option>
+            </select></td>
+            <td><input type="checkbox" id="ch2" checked disabled /><label for="ch2">Check box</label></td>
+          </tr>
+          <tr>
+            <td><select multiple disabled>
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+              <option value="4">Option 4</option>
+              <option value="5">Option 5</option>
+            </select></td>
+            <td>
+              <input type="radio" name="nra" id="ra21" value="1" checked disabled><label for="ra21">Value 1</label><br />
+              <input type="radio" name="nra" id="ra22" value="1" disabled><label for="ra22">Value 2</label><br />
+              <input type="radio" name="nra" id="ra23" value="1" disabled><label for="ra23">Value 3</label><br />
+              <input type="radio" name="nra" id="ra24" value="1" disabled><label for="ra24">Value 4</label><br />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2"><textarea disabled>Text area</textarea></td>
+          </tr>
+          <tr>
+            <td colspan="2"><button disabled>Button</button></td>
+          </tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>Read-Only</legend>
+        <table>
+          <tr>
+            <td><input type="text" placeholder="Placeholder" value="Text box" readonly /></td>
+          </tr>
+          <tr>
+            <td><textarea readonly>Text area</textarea></td>
+          </tr>
+        </table>
+      </fieldset>
+
+    </form>
+
+  <button id="toggle">Toggle</button>
+  </body>
+</html>
