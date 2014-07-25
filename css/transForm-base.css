@@ -1,4 +1,4 @@
-.tf-select {
+.tf-select, .tf-multiple, .tf-file {
     cursor: default;
     overflow: auto;
     display: -moz-inline-box;
@@ -16,7 +16,8 @@
     display: none;
     position: absolute;
     max-height: 300px;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .tf-select.tf-opened .tf-menu {
@@ -31,5 +32,54 @@
 .tf-select select {
     position: fixed;
     top: -1000px;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }
 
+.tf-multiple select {
+    position: fixed;
+    top: -1000px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.tf-select .tf-menu ul,
+.tf-multiple ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.tf-select .tf-menu li,
+.tf-multiple li {
+    padding: 0;
+    margin: 0;
+}
+
+.tf-multiple span,
+.tf-select .tf-right span {
+    white-space: nowrap;
+}
+
+.tf-textarea {
+    resize: none;
+    overflow: auto;
+}
+
+.tf-multiple {
+    max-height: 120px;
+}
+.tf-file input {
+    position: absolute;
+    opacity: .0;
+    filter: alpha(opacity=0);
+    outline: none;
+}
+.tf-file {
+    overflow: hidden;
+}
+.tf-file .tf-info {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

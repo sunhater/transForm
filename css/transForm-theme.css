@@ -1,181 +1,79 @@
-.tf-select .tf-selected {
-    background: #fff;
-    border: 1px solid #fba121;
-    border-radius: 5px 0 0 5px;
+/* COMMON - BEGIN */
+
+/* FONT SETTINGS */
+.tf-select, .tf-text, .tf-textarea, .tf-multiple, .tf-label, .tf-fieldset legend, .tf-file {
+    font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    cursor: pointer;
 }
-.tf-select .tf-right {
-    background: #fff;
-    border: 1px solid #fba121;
-    border-left: none;
-    border-radius: 0 5px 5px 0;
-}
+
+/* FIELD - NORMAL */
 .tf-select .tf-selected,
-.tf-select .tf-menu div,
-.tf-select .tf-right {
+.tf-text,
+.tf-multiple,
+.tf-textarea,
+.tf-file .tf-info {
+    background: #d2eaf6;
+    background: -webkit-linear-gradient(top, #d2eaf6, #fff);
+    background: -moz-linear-gradient(top, #d2eaf6, #fff);
+    background: -ms-linear-gradient(top, #d2eaf6, #fff);
+    background: -o-linear-gradient(top, #d2eaf6, #fff);
+    background: linear-gradient(to bottom, #d2eaf6, #fff);
+    box-shadow: inset 0 0 2px #54b0e0;
+    border: 1px solid #54b0e0;
+    border-radius: 5px;
+    color: #329fe0;
     padding: 3px 5px;
 }
 
-.tf-select .tf-menu {
-    border: 1px solid #fba121;
-    background: #fff;
-    border-radius: 0 0 5px 5px;
-}
-
-.tf-select.tf-opened .tf-selected {
-    border-radius: 5px 0 0 0;
-}
-
-.tf-select.tf-opened .tf-right {
-    border-radius: 0 5px 0 0;
-}
-
-
-
-table.form button,
-table.form .button,
-table.form input[type="button"],
-table.form input[type="reset"],
-table.form input[type="submit"] {
-    margin: 2px;
-}
-
-div.checker,
-div.radio,
-div.uploader span.filename,
-div.selector,
-option,
-textarea,
-input.text,
-input.password,
-input[type="text"],
-input[type="password"] {
-    background: #fff;
-}
-
-div.selector,
-div.checker,
-div.radio,
-div.uploader span.filename,
-textarea,
-input.text,
-input.password,
-input[type="text"],
-input[type="password"] {
-    border-color: #54B0E0;
-    box-shadow: inset 0 0 2px #54B0E0;
-    background: #fff url('img/uniform-field-normal.png') center center repeat-x;
-    background: -webkit-gradient(linear, left top, left bottom, from(#D2EAF6), to(#ffffff));
-    background: -o-linear-gradient(top, #D2EAF6, #ffffff);
-    background: -moz-linear-gradient(top, #D2EAF6, #ffffff);
-}
-textarea {
-    background-position: center top;
-}
-
-div.selector.focus,
-div.radio.focus,
-div.uploader.focus,
-div.uploader.focus span.filename,
-textarea:focus,
-input.text:focus,
-input.password:focus,
-input[type="text"]:focus,
-input[type="password"]:focus {
-    border-color: #fba121;
+/* FIELD - FOCUSED */
+.tf-select.tf-focused .tf-selected,
+.tf-select .tf-menu,
+.tf-multiple.tf-focused,
+.tf-text:focus, .tf-textarea:focus {
+    background: #fee9ca;
+    background: -webkit-linear-gradient(top, #fee9ca, #fff);
+    background: -moz-linear-gradient(top, #fee9ca, #fff);
+    background: -ms-linear-gradient(top, #fee9ca, #fff);
+    background: -o-linear-gradient(top, #fee9ca, #fff);
+    background: linear-gradient(to bottom, #fee9ca, #fff);
     box-shadow: inset 0 0 2px #fba121;
-    background-image: url('img/uniform-field-focus.png');
-    background: -webkit-gradient(linear, left top, left bottom, from(#fee9ca), to(#ffffff));
-    background: -o-linear-gradient(top, #fee9ca, #ffffff);
-    background: -moz-linear-gradient(top, #fee9ca, #ffffff);
-}
-
-div.uploader span.action {
-    border-left: 1px solid #82a7c4;
-}
-
-div.uploader span,
-div.selector span,
-label,
-textarea,
-input.text,
-input.password,
-input[type="text"],
-input[type="password"] {
-    color: #307AAC;
-}
-
-div.radio span.checked {
-    background: #307AAC;
-    border-color: #307AAC;
-}
-
-div.selector.focus span,
-div.uploader.focus span.filename,
-textarea:focus,
-input.text:focus,
-input.password:focus,
-input[type="text"]:focus,
-input[type="password"]:focus {
+    border: 1px solid #fba121;
     color: #000;
 }
 
-div.uploader span.action,
-div.radio:active,
-div.radio.active {
-    background: #e7e7e7;
+/* BUTTON - NORMAL */
+.tf-select .tf-right,
+.tf-file .tf-button {
+    background: #b7def2;
+    background: -webkit-linear-gradient(top, #b7def2, #54b0e0);
+    background: -moz-linear-gradient(top, #b7def2, #54b0e0);
+    background: -ms-linear-gradient(top, #b7def2, #54b0e0);
+    background: -o-linear-gradient(top, #b7def2, #54b0e0);
+    background: linear-gradient(to bottom, #b7def2, #54b0e0);
+    box-shadow: inset 0 0 2px 0 #fff, inset 0 0 2px 0 #fff;
+    border: 1px solid #54b0e0;
+    border-radius: 5px;
+    padding: 3px 5px;
 }
 
-div.checker span.checked {
-    background: transparent url('img/uniform.gif') top left no-repeat;
+/* BUTTON - FOCUSED */
+.tf-select.tf-focused .tf-right {
+    background: #fcc06b;
+    background: -webkit-linear-gradient(top, #fcd19a, #faa52d);
+    background: -moz-linear-gradient(top, #fcd19a, #faa52d);
+    background: -ms-linear-gradient(top, #fcd19a, #faa52d);
+    background: -o-linear-gradient(top, #fcd19a, #faa52d);
+    background: linear-gradient(to bottom, #fcd19a, #faa52d);
+    border-color: #fba121;
 }
 
-div.selector span {
-    background: transparent url('img/uniform.gif') right -25px no-repeat;
-}
-
-div.selector.hover span {
-    background-position: right -51px;
-}
-
-div.selector.focus span {
-    background-position: right -77px;
-}
-
-div.checker,
-div.radio {
-    background: -moz-linear-gradient(top, #ffffff, #D2EAF6);
-    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#D2EAF6));
-    background: -o-linear-gradient(top, #ffffff, #D2EAF6);
-}
-
-div.selector:active,
-div.selector.active
-div.checker:active,
-div.checker.active,
-div.radio:active,
-div.radio.active {
-    background: -moz-linear-gradient(top, #D2EAF6, #ffffff);
-    background: -webkit-gradient(linear, left top, left bottom, from(#D2EAF6), to(#ffffff));
-    background: -o-linear-gradient(top, #D2EAF6, #ffffff);
-}
-
-div.selector, div.uploader, div.checker, textarea,
-input.text,
-input.password,
-input[type="text"],
-input[type="password"] {
-    border-radius: 3px;
-}
-
-div.uploader {
-    border-color:#54B0E0;
-}
-
-div.uploader span.action {
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-    background: url('img/uniform-file-button-normal.png') center center;
-    border-left: 1px solid #54B0E0;
+/* BLACK OUTLINE, WHITE TEXT */
+.tf-select .tf-right,
+.tf-select .tf-menu .tf-hover,
+.tf-multiple .tf-hover,
+.tf-multiple .tf-selected,
+.tf-file .tf-button {
     color: #fff;
     text-shadow:
         1px 0 rgba(0,0,0,.2),
@@ -188,49 +86,322 @@ div.uploader span.action {
         -1px 1px rgba(0,0,0,.2);
 }
 
-div.uploader:hover span.action {
-    background-image: url('img/uniform-file-button-hover.png');
+/* COMMON - END */
+
+/* SELECT BOX - BEGIN */
+
+.tf-select .tf-selected {
+    border-radius: 5px 0 0 5px;
 }
 
-div.uploader.focus span.action {
-    background-image: url('img/uniform-file-button-focus.png');
-    border-left: 1px solid #fba121;
+.tf-select .tf-right {
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    text-align: center;
 }
 
-div.uploader span.filename {
-    border-top-left-radius: 2px;
-    border-bottom-left-radius: 2px;
-    width:135px;
+.tf-select .tf-right span {
+    display: block;
+    margin: -1px -5px 0 -5px;
+    padding-bottom: 1px;
 }
 
-div.selector span {
-    padding-left:4px;
+.tf-select .tf-right span:before {
+    content: "\00a0v";
 }
 
-::-webkit-input-placeholder {
+.tf-select .tf-menu {
+    border-radius: 0 0 5px 5px;
+}
+
+.tf-select .tf-menu div,
+.tf-multiple div{
+    border: 1px solid transparent;
+    border-left-width: 0;
+    border-right-width: 0;
+    padding: 3px 5px;
+}
+
+.tf-select .tf-menu .tf-hover,
+.tf-multiple.tf-focused .tf-hover,
+.tf-multiple.tf-focused .tf-selected {
+    border-color: #fba121;
+    background: #fcc06b;
+    background: -webkit-linear-gradient(top, #faa52d, #fcd19a);
+    background: -moz-linear-gradient(top, #faa52d, #fcd19a);
+    background: -ms-linear-gradient(top, #faa52d, #fcd19a);
+    background: -o-linear-gradient(top, #faa52d, #fcd19a);
+    background: linear-gradient(to bottom, #faa52d, #fcd19a);
+    box-shadow: inset 0 0 2px #fff, inset 0 0 2px #fff;
+}
+
+.tf-select .tf-menu .tf-first,
+.tf-select .tf-menu .tf-group-first {
+    border-top-width: 0;
+}
+
+.tf-select .tf-menu .tf-group-last,
+.tf-select .tf-menu div.tf-last {
+    border-bottom-width: 0;
+}
+
+.tf-select .tf-menu ul {
+    overflow: hidden;
+}
+
+.tf-select .tf-menu li.tf-last {
+    margin-bottom: -1px;
+}
+
+.tf-select .tf-menu .tf-last {
+    border-radius: 0 0 5px 5px;
+}
+
+.tf-select.tf-opened .tf-selected {
+    border-radius: 5px 0 0 0;
+}
+
+.tf-select.tf-opened .tf-right {
+    border-radius: 0 5px 0 0;
+}
+
+.tf-select .tf-menu li,
+.tf-multiple.tf-focused li {
+    border-bottom: 1px solid #fba121;
+    border-top: 1px solid #fba121;
+    margin: -1px 0;
+}
+
+.tf-select .tf-menu li > span,
+.tf-multiple li > span,
+.tf-multiple.tf-focused li > span {
+    display: block;
+    padding: 3px 5px;
+    text-align: center;
+    font-weight: bold;
+    color: #000;
+    background: #fbd0a3;
+    border-bottom: 1px solid #fba121;
+    cursor: default;
+    white-space: nowrap;
+}
+
+/* SELECT BOX - END */
+
+/* MULTIPLE SELECT BOX - BEGIN */
+
+.tf-multiple {
+    padding: 0;
+}
+.tf-multiple li {
+    border: 1px solid #54b0e0;
+    border-right: none;
+    border-left: none;
+    margin: -1px 0;
+}
+.tf-multiple li > span {
+    border-color: #54b0e0;
+    background: #c1ddf5;
+}
+.tf-multiple .tf-hover,
+.tf-multiple .tf-selected,
+.tf-multiple.tf-focused .tf-hover {
+    background: #b7def2;
+    background: -webkit-linear-gradient(top, #54b0e0, #b7def2);
+    background: -moz-linear-gradient(top, #54b0e0, #b7def2);
+    background: -ms-linear-gradient(top, #54b0e0, #b7def2);
+    background: -o-linear-gradient(top, #54b0e0, #b7def2);
+    background: linear-gradient(to bottom, #54b0e0, #b7def2);
+    box-shadow: inset 0 0 2px #fff, inset 0 0 2px #fff;
+    border-color: #54b0e0;
+}
+.tf-multiple .tf-hover,
+.tf-multiple .tf-selected {
+    border: 1px solid #54b0e0;
+    border-left: none;
+    border-right: none;
+}
+.tf-multiple div.tf-first {
+    border-top:none;
+    border-radius: 5px 5px 0 0;
+}
+.tf-multiple div.tf-last {
+    border-bottom: none;
+    border-radius: 0 0 5px 5px;
+}
+.tf-multiple .tf-group-first {
+    border-top: none;
+}
+.tf-multiple li.tf-last,
+.tf-multiple .tf-group-last {
+    border-bottom: none;
+}
+
+/* MULTIPLE SELECT BOX - END */
+
+/* FILE UPLOAD BOX - BEGIN */
+
+.tf-file {
+    width: 200px;
+    padding: 0;
+    overflow: auto;
+}
+
+.tf-file .tf-info {
+    float: right;
+    padding: 3px 5px;
+    border-radius: 5px 0 0 5px;
+    border-right: none;
+}
+
+.tf-file .tf-button {
+    float: right;
+    padding: 3px 7px;
+    border-radius: 0 5px 5px 0;
+}
+
+.tf-file input {
+    background: #f00;
+    margin: 0;
+    float: right;
+}
+
+/* FILE UPLOAD BOX - END */
+
+/* TEXT & TEXTAREA - BEGIN */
+
+.tf-text, .tf-textarea {
+    outline: none;
+    cursor: text;
+    margin: 0;
+}
+.tf-text.tf-readOnly,
+.tf-textarea.tf-readOnly,
+.tf-text.tf-readOnly:focus,
+.tf-textarea.tf-readOnly:focus {
+    background: #e4e4e4;
+    background: -webkit-linear-gradient(top, #e4e4e4, #fff);
+    background: -moz-linear-gradient(top, #e4e4e4, #fff);
+    background: -ms-linear-gradient(top, #e4e4e4, #fff);
+    background: -o-linear-gradient(top, #e4e4e4, #fff);
+    background: linear-gradient(to bottom, #e4e4e4, #fff);
+    box-shadow: inset 0 0 2px #a2a2a2;
+    border: 1px solid #a2a2a2;
+    border-radius: 5px;
+    color: #888;
+    padding: 3px 5px;
+}
+
+/* PLACEHOLDER COLORS */
+
+.tf-text::-webkit-input-placeholder,
+.tf-textarea::-webkit-input-placeholder {
     color: #abc7d6;
 }
-:-moz-placeholder {
+.tf-text:-moz-placeholder,
+.tf-textarea:-moz-placeholder {
     color: #54B0E0;
 }
-::-moz-placeholder {
+.tf-text::-moz-placeholder,
+.tf-textarea::-moz-placeholder {
     color: #54B0E0;
 }
-:-ms-input-placeholder {
+.tf-text:-ms-input-placeholder,
+.tf-textarea:-ms-input-placeholder {
     color: #abc7d6;
 }
-:focus::-webkit-input-placeholder {
+.tf-text:focus::-webkit-input-placeholder,
+.tf-textarea:focus::-webkit-input-placeholder {
     color: #f3c889;
 }
-:focus:-moz-placeholder {
+.tf-text:focus:-moz-placeholder,
+.tf-textarea:focus:-moz-placeholder {
     color: #fba121;
 }
-:focus::-moz-placeholder {
+.tf-text:focus::-moz-placeholder,
+.tf-textarea:focus::-moz-placeholder {
     color: #fba121;
 }
-:focus:-ms-input-placeholder {
+.tf-text:focus:-ms-input-placeholder,
+.tf-textarea:focus:-ms-input-placeholder {
     color: #f3c889;
 }
-div.selector .ui-icon {
-    background:none;
+
+/* READ-ONLY PLACEHOLDERS */
+
+.tf-text.tf-readOnly::-webkit-input-placeholder,
+.tf-textarea.tf-readOnly::-webkit-input-placeholder {
+    color: #d4d4d4;
+}
+.tf-text.tf-readOnly:-moz-placeholder,
+.tf-textarea.tf-readOnly:-moz-placeholder {
+    color: #dedede;
+}
+.tf-text.tf-readOnly::-moz-placeholder,
+.tf-textarea.tf-readOnly::-moz-placeholder {
+    color: #dedede;
+}
+.tf-text.tf-readOnly:-ms-input-placeholder,
+.tf-textarea.tf-readOnly:-ms-input-placeholder {
+    color: #d4d4d4;
+}
+.tf-text.tf-readOnly:focus::-webkit-input-placeholder,
+.tf-textarea.tf-readOnly:focus::-webkit-input-placeholder {
+    color: #d4d4d4;
+}
+.tf-text.tf-readOnly:focus:-moz-placeholder,
+.tf-textarea.tf-readOnly:focus:-moz-placeholder {
+    color: #dedede;
+}
+.tf-text.tf-readOnly:focus::-moz-placeholder,
+.tf-textarea.tf-readOnly:focus::-moz-placeholder {
+    color: #dedede;
+}
+.tf-text.tf-readOnly:focus:-ms-input-placeholder,
+.tf-textarea.tf-readOnly:focus:-ms-input-placeholder {
+    color: #d4d4d4;
+}
+
+/* TEXT & TEXTAREA - END */
+
+/* FIELD SET */
+.tf-fieldset {
+    border: 1px solid #54b0e0;
+    box-shadow: inset 0 0 2px #54b0e0;
+    background: #f0f0ff;
+    margin: 0;
+    padding: 5px 10px 10px 10px;
+    border-radius: 5px;
+}
+.tf-fieldset legend {
+    margin: 0;
+    padding: 0;
+    color: #329fe0;
+    font-weight: bold;
+    text-shadow:
+        1px 0 rgba(255,255,255,.2),
+        -1px 0 rgba(255,255,255,.2),
+        0 -1px rgba(255,255,255,.2),
+        0 1px rgba(255,255,255,.2),
+        1px 1px rgba(255,255,255,.2),
+        -1px -1px rgba(255,255,255,.2),
+        1px -1px rgba(255,255,255,.2),
+        -1px 1px rgba(255,255,255,.2);
+}
+
+/* MISC */
+
+.tf-label {
+    color: #000;
+}
+
+.tf-disabled {
+    opacity: .5;
+    filter: alpha(opacity=50);
+    cursor: default;
+}
+.tf-fieldset.tf-disabled,
+.tf-form.tf-disabled {
+    opacity: 1;
+    filter: alpha(opacity=100);
 }
