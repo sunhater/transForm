@@ -1,4 +1,4 @@
-.tf-select, .tf-multiple, .tf-file {
+.tf-select, .tf-multiple, .tf-file, .tf-radio, .tf-checkbox, .tf-button {
     cursor: default;
     overflow: auto;
     display: -moz-inline-box;
@@ -25,8 +25,8 @@
 }
 
 .tf-select .tf-right {
-    float: left;
-    width: 1em;
+    float: right;
+
 }
 
 .tf-select select {
@@ -74,6 +74,8 @@
     opacity: .0;
     filter: alpha(opacity=0);
     outline: none;
+    margin: 0;
+    float: right;
 }
 .tf-file {
     overflow: hidden;
@@ -82,4 +84,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    float: right;
+}
+.tf-file .tf-button {
+    float: right
 }

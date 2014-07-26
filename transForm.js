@@ -1,14 +1,29 @@
 (function($) {
 
+    var scrollbarWidth;
+
     $.fn.transForm = function(options) {
 
         // Get scrollbar width
-        var div = $('<div></div>')
-            .css({width: 100, height: 100, overflow: 'auto', position: 'absolute', top: -1000, left: -1000})
-            .prependTo('body').append('<div></div>').find('div').css({width: '100%', height: 200}),
-        scrollbarWidth = 100 - div.width();
-        div.parent().remove();
-
+        if (!scrollbarWidth) {
+            var div = $('<div></div>').css({
+                display: 'block',
+                visibility: 'visible',
+                position: 'absolute',
+                overflow: 'auto',
+                width: 100,
+                height: 100,
+                top: -1000,
+                left: -1000
+            }).prependTo('body').append('<div></div>').find('div').css({
+                display: 'block',
+                visibility: 'visible',
+                width: '100%',
+                height: 200
+            });
+            scrollbarWidth = 100 - div.width();
+            div.parent().remove();
+        }
 
         var tags = "|form|fieldset|input|select|textarea|button|label|",
             types = "|button|text|file|checkbox|radio|submit|reset|password|",
@@ -472,6 +487,14 @@
                 },
 
                 textarea: function() {
+
+                    if (construct || destruct)
+                        $(t).css({
+                            borderTopRightRadius: '',
+                            borderBottomRightRadius: '',
+                            borderBottomLeftRadius: ''
+                        });
+
                     toggleClass(t, cls(tagName));
 
                     if (t.readOnly)
@@ -526,6 +549,28 @@
 
                 button: function() {
 
+                    if (!construct) {
+                        el = $(t).parent();
+                        return;
+                    }
+
+                    el = $('<div class="' + cls('button') + '"><span></span></div>');
+
+                    $(t).after(el).detach().appendTo(el);
+                    el.find('span').text(t.textContent);
+
+                    $(t).css({
+                        width: el.innerWidth() + outerHSpace(el),
+                        height: el.innerHeight() + outerVSpace(el),
+                        marginLeft: - parseInt(el.css('borderLeftWidth')),
+                        marginTop: - parseInt(el.css('borderTopWidth'))
+                    }).focus(function() {
+                        el.addClass(cls('focused'));
+                    }).blur(function() {
+                        el.removeClass(cls('focused'));
+                    }).mousedown(function() {
+                        el.addClass(cls('focused'));
+                    });
                 },
 
                 text: function() {
@@ -541,9 +586,10 @@
                         return;
                     }
 
-                    el = $('<div class="' + cls('file') + '"><div class="' + cls('button') + '"><span>' + o.file.browse + '</span></div><div class="' + cls('info') + '"><span>&nbsp;</span></div></div>');
+                    el = $('<div class="' + cls(type) + '"><div class="' + cls('button') + '"><span>' + o.file.browse + '</span></div><div class="' + cls('info') + '"><span>&nbsp;</span></div></div>');
 
                     $(t).after(el).detach().prependTo(el);
+
                     var info = el.find(sel('info')),
                         button = el.find(sel('button')),
                         input = el.find('input'),
@@ -553,21 +599,23 @@
                                 info.find('span').html(o.file.noFile);
                             else
                                 info.find('span').text((files.length == 1) ? files[0]['name'] : o.file.count.replace('{count}', files.length));
+                            el.attr('label', input.attr('label'))
                         };
 
                     info.css({
                         width: el.innerWidth() - button.outerWidth() - outerHSpace(info)
-                    })
+                    });
 
                     input.css({
                         width: el.outerWidth(),
                         height: el.outerHeight()
                     }).focus(function() {
+                        $(sel('focused')).removeClass(cls('focused'));
                         el.addClass(cls('focused'));
                     }).blur(function() {
                         el.removeClass(cls('focused'));
                     }).change(u).click(function() {
-                        el.addClass(cls('focused'))
+                        t.focus();
                     });
 
                     u();
@@ -575,10 +623,69 @@
 
                 checkbox: function() {
 
+                    if (!construct) {
+                        el = $(t).parent();
+                        return;
+                    }
+
+                    el = $('<div class="' + cls(type) + '"><span></span></div>');
+
+                    var u = function() {
+                            if (t.checked)
+                                el.addClass(cls('checked'));
+                            else
+                                el.removeClass(cls('checked'));
+                        };
+
+                    $(t).after(el).detach().appendTo(el).focus(function() {
+                        el.addClass(cls('focused'));
+                    }).blur(function() {
+                        el.removeClass(cls('focused'));
+                    }).click(function() {
+                        u();
+                        $(sel('focused')).removeClass(cls('focused'));
+                        el.addClass(cls('focused'));
+                        t.focus();
+                    }).change(u);
+
+                    u();
                 },
 
                 radio: function() {
 
+                    if (!construct) {
+                        el = $(t).parent();
+                        return;
+                    }
+
+                    el = $('<div class="' + cls(type) + '"><span></span></div>');
+
+                    var radios = $(t).parents('body, form').find('input[type="radio"][name="' + t.name + '"]'),
+                        u = function() {
+                            $(radios).each(function() {
+                                if (this.checked)
+                                    $(this).parent().addClass(cls('checked'));
+                                else
+                                    $(this).parent().removeClass(cls('checked'));
+                            });
+                        },
+                        f = function(focused) {
+                            if (focused)
+                                $(radios).parent().addClass(cls('focused'));
+                            else
+                                $(radios).parent().removeClass(cls('focused'));
+                        };
+
+                    $(t).after(el).detach().appendTo(el).focus(function() {
+                        f(true);
+                    }).blur(function() {
+                        f(false);
+                    }).click(function() {
+                        u();
+                        f(true);
+                    }).change(u);
+
+                    u();
                 },
 
                 submit: function() {

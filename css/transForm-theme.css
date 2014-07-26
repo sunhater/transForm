@@ -1,7 +1,17 @@
 /* COMMON - BEGIN */
 
 /* FONT SETTINGS */
-.tf-select, .tf-text, .tf-textarea, .tf-multiple, .tf-label, .tf-fieldset legend, .tf-file {
+.tf-select,
+.tf-text,
+.tf-textarea,
+.tf-multiple,
+.tf-label,
+.tf-fieldset legend,
+.tf-file,
+.tf-file input,
+.tf-radio,
+.tf-checkbox,
+.tf-button {
     font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
     font-size: 13px;
     cursor: pointer;
@@ -12,7 +22,9 @@
 .tf-text,
 .tf-multiple,
 .tf-textarea,
-.tf-file .tf-info {
+.tf-file .tf-info,
+.tf-radio,
+.tf-checkbox {
     background: #d2eaf6;
     background: -webkit-linear-gradient(top, #d2eaf6, #fff);
     background: -moz-linear-gradient(top, #d2eaf6, #fff);
@@ -30,7 +42,10 @@
 .tf-select.tf-focused .tf-selected,
 .tf-select .tf-menu,
 .tf-multiple.tf-focused,
-.tf-text:focus, .tf-textarea:focus {
+.tf-text:focus, .tf-textarea:focus,
+.tf-file.tf-focused .tf-info,
+.tf-radio.tf-focused,
+.tf-checkbox.tf-focused{
     background: #fee9ca;
     background: -webkit-linear-gradient(top, #fee9ca, #fff);
     background: -moz-linear-gradient(top, #fee9ca, #fff);
@@ -44,7 +59,8 @@
 
 /* BUTTON - NORMAL */
 .tf-select .tf-right,
-.tf-file .tf-button {
+.tf-button,
+.tf-file .tf-button{
     background: #b7def2;
     background: -webkit-linear-gradient(top, #b7def2, #54b0e0);
     background: -moz-linear-gradient(top, #b7def2, #54b0e0);
@@ -58,7 +74,9 @@
 }
 
 /* BUTTON - FOCUSED */
-.tf-select.tf-focused .tf-right {
+.tf-select.tf-focused .tf-right,
+.tf-file.tf-focused .tf-button,
+.tf-button.tf-focused {
     background: #fcc06b;
     background: -webkit-linear-gradient(top, #fcd19a, #faa52d);
     background: -moz-linear-gradient(top, #fcd19a, #faa52d);
@@ -73,7 +91,7 @@
 .tf-select .tf-menu .tf-hover,
 .tf-multiple .tf-hover,
 .tf-multiple .tf-selected,
-.tf-file .tf-button {
+.tf-button {
     color: #fff;
     text-shadow:
         1px 0 rgba(0,0,0,.2),
@@ -97,17 +115,13 @@
 .tf-select .tf-right {
     border-left: none;
     border-radius: 0 5px 5px 0;
-    text-align: center;
 }
 
 .tf-select .tf-right span {
     display: block;
-    margin: -1px -5px 0 -5px;
-    padding-bottom: 1px;
-}
-
-.tf-select .tf-right span:before {
-    content: "\00a0v";
+    background: url('ui-icons-white.png') -64px -15px;
+    width: 16px;
+    margin-left: -2px;
 }
 
 .tf-select .tf-menu {
@@ -115,7 +129,7 @@
 }
 
 .tf-select .tf-menu div,
-.tf-multiple div{
+.tf-multiple div {
     border: 1px solid transparent;
     border-left-width: 0;
     border-right-width: 0;
@@ -247,26 +261,122 @@
     overflow: auto;
 }
 
-.tf-file .tf-info {
-    float: right;
+.tf-file .tf-info, .tf-file.tf-focused .tf-info {
     padding: 3px 5px;
     border-radius: 5px 0 0 5px;
     border-right: none;
 }
 
 .tf-file .tf-button {
-    float: right;
-    padding: 3px 7px;
     border-radius: 0 5px 5px 0;
+    color: transparent;
+    text-shadow: none;
 }
-
-.tf-file input {
-    background: #f00;
-    margin: 0;
-    float: right;
+.tf-file .tf-button span {
+    margin: 0 0 0 -4px;
+    width: 16px;
+    height: 16px;
+    display: block;
+    overflow: hidden;
+    background: url('ui-icons-white.png') -16px -96px;
+}
+.tf-file .tf-button:before {
+    content: "\00a0"
+}
+.tf-file input::-webkit-file-upload-button {
+    cursor: pointer;
 }
 
 /* FILE UPLOAD BOX - END */
+
+/* RADIO BUTTON - BEGIN */
+
+.tf-radio {
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    border-radius: 8px;
+}
+.tf-radio input {
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    margin: -1px 0 0 -1px;
+    padding: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer;
+}
+.tf-radio span {
+    width: 15px;
+    height: 15px;
+    display: block;
+    float: right;
+}
+.tf-radio.tf-checked span {
+    background: url('ui-icons-blue.png') -80px -145px;
+}
+.tf-radio.tf-checked.tf-focused span {
+    background-image: url('ui-icons-black.png');
+}
+
+/* RADIO BUTTON - END */
+
+/* CHECK BOX - BEGIN */
+
+.tf-checkbox {
+    padding: 0;
+    width: 15px;
+    height: 15px;
+}
+
+.tf-checkbox input {
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    margin: -1px 0 0 -1px;
+    padding: 0;
+    outline: none;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer;
+}
+
+.tf-checkbox.tf-checked span {
+    width: 15px;
+    height: 15px;
+    display: block;
+    background: url('ui-icons-blue.png') -64px -145px;
+    float: right;
+}
+.tf-checkbox.tf-focused.tf-checked span {
+    background-image: url('ui-icons-black.png');
+}
+
+
+/* CHECK BX - END */
+
+/* BUTTON */
+
+.tf-button {
+    overflow: hidden;
+    padding: 0;
+}
+
+.tf-button span {
+    margin: 3px 7px;
+    float: right;
+}
+
+.tf-button input,
+.tf-button button {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
 
 /* TEXT & TEXTAREA - BEGIN */
 
@@ -393,6 +503,7 @@
 
 .tf-label {
     color: #000;
+    margin: 0 3px;
 }
 
 .tf-disabled {
