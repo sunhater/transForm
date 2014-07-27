@@ -1,3 +1,10 @@
+/*!
+ * TransForm Base CSS properties
+ *
+ * Copyright (c) 2010-2014 Pavel Tzonkov <sunhater@sunhater.com>
+ * Dual licensed under the MIT and GPL licenses.
+ */
+
 .tf-select, .tf-multiple, .tf-file, .tf-radio, .tf-checkbox, .tf-button {
     cursor: default;
     overflow: auto;
@@ -24,18 +31,11 @@
     display: block;
 }
 
-.tf-select .tf-right {
+.tf-select .tf-button {
     float: right;
-
 }
 
-.tf-select select {
-    position: fixed;
-    top: -1000px;
-    opacity: 0;
-    filter: alpha(opacity=0);
-}
-
+.tf-select select,
 .tf-multiple select {
     position: fixed;
     top: -1000px;
@@ -57,7 +57,7 @@
 }
 
 .tf-multiple span,
-.tf-select .tf-right span {
+.tf-select .tf-button span {
     white-space: nowrap;
 }
 
@@ -67,15 +67,19 @@
 }
 
 .tf-multiple {
-    max-height: 120px;
+    max-height: 118px;
 }
-.tf-file input {
+.tf-file input,
+.tf-radio input,
+.tf-checkbox input,
+.tf-button input,
+.tf-button button {
     position: absolute;
     opacity: .0;
     filter: alpha(opacity=0);
     outline: none;
     margin: 0;
-    float: right;
+    padding: 0;
 }
 .tf-file {
     overflow: hidden;
@@ -87,5 +91,5 @@
     float: right;
 }
 .tf-file .tf-button {
-    float: right
+    float: right;
 }

@@ -1,6 +1,7 @@
 <html>
 
   <head>
+    <title>TransForm Samples</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link type="text/css" rel="stylesheet" href="css/transForm-base.css" />
     <link type="text/css" rel="stylesheet" href="css/transForm-theme.css" />
@@ -11,24 +12,54 @@ fieldset, .tf-fieldset {
     float: left;
     margin-right: 10px;
 }
+.tf-text, .tf-textarea {
+    width: 200px;
+}
+.tf-select .tf-menu {
+    max-height: 186px;
+}
     </style>
     <script type="text/javascript">
 $(function() {
-    $('form').transForm();
-    var transformed = true,
-        disabled = false;
+    var transform = function() {
+            $($('form')[0]).transForm();
+            $($('form')[1]).transForm({
+                textarea: {
+                    autoExpand: true,
+                    maxLength: 200
+                }
+            })
+        },
+        transformed = true,
+        disabled = false,
+        readonly = false;
+    transform();
     $('#transForm').click(function() {
-        if (transformed)
+        if (transformed) {
             $('form').transForm(false);
-        else
-            $('form').transForm();
+            $('#disable, #ro').attr({disabled:true});
+        } else {
+            transform();
+            $('#disable, #ro').attr({disabled:false});
+        }
         transformed = !transformed;
     });
     $('#disable').click(function() {
+        if (!transformed)
+            return;
         disabled = !disabled;
         $('form').transForm({disabled: disabled});
     });
+    $('#ro').click(function() {
+        if (!transformed)
+            return;
+        readonly = !readonly;
+        $('form').transForm({readonly: readonly});
+    });
 
+    setTimeout(function() {
+        $('input[type="radio"]').get(3).transForm.checked(true);
+    }, 2000);
 });
 
 
@@ -36,93 +67,106 @@ $(function() {
   </head>
 
   <body>
-    <form action="ddd" enctype="multipart/form-data">
+    <form action="" enctype="multipart/form-data">
 
       <fieldset>
-        <legend>Field set</legend>
+        <legend>Basic</legend>
         <table>
           <tr>
-            <td colspan="2"><input type="text" placeholder="Place holder" value="Text box" /></td>
+            <td colspan="2"><input name="text" type="text" placeholder="Place holder" value="Text box" /></td>
           </tr>
           <tr>
-            <td colspan="2"><input type="file" multiple /></td>
+            <td colspan="2"><textarea name="textarea" placeholder="Place holder" id="gg1">Text area</textarea></td>
           </tr>
           <tr>
-            <td style="white-space: nowrap"><select>
-
-              <optgroup label="Group 1">
-                <option value="1">Option 1</option>
-                <option value="2" selected>Option 2</option>
-              </optgroup>
-
-              <optgroup label="Group 2">
-                <option value="3">Option 3</option>
-                <option value="4">Option 4</option>
-                <option value="5">Option 5</option>
-              </optgroup>
-
-              <optgroup label="Group 1b">
-                <option value="1">Option 1b</option>
-                <option value="2">Option 2b</option>
-              </optgroup>
-
+            <td colspan="2"><input name="file" type="file" multiple /></td>
+          </tr>
+          <tr>
+            <td style="white-space: nowrap"><select name="select">
+              <option value="1">Option 1</option>
+              <option value="2" selected>Option 2</option>
+              <option value="3">Option 3</option>
+              <option value="4">Option 4</option>
+              <option value="5">Option 5</option>
             </select></td>
-            <td><input type="checkbox" checked id="ch1" /><label for="ch1">Check box</label></td>
+            <td><input type="checkbox" name="checkbox" checked id="ch1" /><label for="ch1">Check box</label></td>
           </tr>
           <tr>
-            <td><select multiple>
-
-
+            <td><select name="multiple" multiple>
                 <option value="1">Option 1</option>
                 <option value="2" selected>Option 2</option>
-
-
-
                 <option value="3">Option 3</option>
                 <option value="4">Option 4</option>
                 <option value="5">Option 5</option>
-
-
-
-                <option value="1">Option 1b</option>
-                <option value="2">Option 2b</option>
-
-
-                  <option value="5">Option 5p</option>
-
+                <option value="6">Option 6</option>
             </select></td>
             <td>
-              <input type="radio" name="nra" id="ra11" value="1" checked><label for="ra11">Value 1</label><br />
-              <input type="radio" name="nra" id="ra12" value="2"><label for="ra12">Value 2</label><br />
-              <input type="radio" name="nra" id="ra13" value="3"><label for="ra13">Value 3</label><br />
-              <input type="radio" name="nra" id="ra14" value="4"><label for="ra14">Value 4</label><br />
+              <div style="padding:2px"><input type="radio" name="radio" id="ra11" value="1" checked><label for="ra11">Value 1</label></div>
+              <div style="padding:2px"><input type="radio" name="radio" id="ra12" value="2"><label for="ra12">Value 2</label><br /></div>
+              <div style="padding:2px"><input type="radio" name="radio" id="ra13" value="3"><label for="ra13">Value 3</label><br /></div>
+              <div style="padding:2px"><input type="radio" name="radio" id="ra14" value="4"><label for="ra14">Value 4</label><br /></div>
             </td>
           </tr>
-          <tr>
-            <td colspan="2"><textarea placeholder="Place holder" id="gg1">Text area</textarea></td>
-          </tr>
+
           <tr>
             <td colspan="2"><button>Button</button></td>
           </tr>
         </table>
       </fieldset>
+    </form>
 
+    <form>
       <fieldset>
-        <legend>Read-Only</legend>
+        <legend>Advanced</legend>
         <table>
           <tr>
-            <td><input type="text" placeholder="Place holder" value="Text box" readonly /></td>
+            <td><textarea placeholder="Place holder">Auto-expandable text area. Maximum length: 200 characters.</textarea></td>
           </tr>
           <tr>
-            <td><textarea readonly placeholder="Place holder">Text area</textarea></td>
+            <td><select>
+              <optgroup label="Group 1">
+                <option value="11">Option G1-1</option>
+                <option value="12">Option G1-2</option>
+                <option value="13">Option G1-3</option>
+              </optgroup>
+              <optgroup label="Group 2">
+                <option value="21">Option G2-1</option>
+                <option value="22">Option G2-2</option>
+                <option value="23">Option G2-3</option>
+              </optgroup>
+              <optgroup label="Group 3">
+                <option value="31">Option G3-1</option>
+                <option value="32">Option G3-2</option>
+                <option value="33">Option G3-3</option>
+              </optgroup>
+            </select></td>
+          </tr>
+          <tr>
+            <td><select multiple>
+              <optgroup label="Group 1">
+                <option value="11">Option G1-1</option>
+                <option value="12">Option G1-2</option>
+                <option value="13">Option G1-3</option>
+              </optgroup>
+              <optgroup label="Group 2">
+                <option value="21">Option G2-1</option>
+                <option value="22">Option G2-2</option>
+                <option value="23">Option G2-3</option>
+              </optgroup>
+              <optgroup label="Group 3">
+                <option value="31">Option G3-1</option>
+                <option value="32">Option G3-2</option>
+                <option value="33">Option G3-3</option>
+              </optgroup>
+            </select></td>
           </tr>
         </table>
       </fieldset>
-
     </form>
 
-  <button id="transForm">Toggle transForm</button>
-  <button id="disable">Toggle disable</button>
+  <button id="transForm">Toggle transForm</button><br />
+  <button id="disable">Toggle disable</button><br />
+  <button id="ro">Toggle read-only</button>
 
   </body>
 </html>

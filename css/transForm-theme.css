@@ -1,3 +1,11 @@
+/*!
+ * Default TransForm Theme
+ * 2014-07-27
+ *
+ * Copyright (c) 2010-2014 Pavel Tzonkov <sunhater@sunhater.com>
+ * Dual licensed under the MIT and GPL licenses.
+ */
+
 /* COMMON - BEGIN */
 
 /* FONT SETTINGS */
@@ -58,7 +66,6 @@
 }
 
 /* BUTTON - NORMAL */
-.tf-select .tf-right,
 .tf-button,
 .tf-file .tf-button{
     background: #b7def2;
@@ -74,9 +81,9 @@
 }
 
 /* BUTTON - FOCUSED */
-.tf-select.tf-focused .tf-right,
 .tf-file.tf-focused .tf-button,
-.tf-button.tf-focused {
+.tf-button.tf-focused,
+.tf-select.tf-focused .tf-button{
     background: #fcc06b;
     background: -webkit-linear-gradient(top, #fcd19a, #faa52d);
     background: -moz-linear-gradient(top, #fcd19a, #faa52d);
@@ -87,7 +94,6 @@
 }
 
 /* BLACK OUTLINE, WHITE TEXT */
-.tf-select .tf-right,
 .tf-select .tf-menu .tf-hover,
 .tf-multiple .tf-hover,
 .tf-multiple .tf-selected,
@@ -111,23 +117,21 @@
 .tf-select .tf-selected {
     border-radius: 5px 0 0 5px;
 }
-
-.tf-select .tf-right {
+.tf-select .tf-button {
     border-left: none;
     border-radius: 0 5px 5px 0;
 }
 
-.tf-select .tf-right span {
+.tf-select .tf-button span {
     display: block;
     background: url('ui-icons-white.png') -64px -15px;
     width: 16px;
-    margin-left: -2px;
+    margin-left: 4px;
+    margin-right: 5px;
 }
-
 .tf-select .tf-menu {
     border-radius: 0 0 5px 5px;
 }
-
 .tf-select .tf-menu div,
 .tf-multiple div {
     border: 1px solid transparent;
@@ -135,7 +139,6 @@
     border-right-width: 0;
     padding: 3px 5px;
 }
-
 .tf-select .tf-menu .tf-hover,
 .tf-multiple.tf-focused .tf-hover,
 .tf-multiple.tf-focused .tf-selected {
@@ -148,44 +151,35 @@
     background: linear-gradient(to bottom, #faa52d, #fcd19a);
     box-shadow: inset 0 0 2px #fff, inset 0 0 2px #fff;
 }
-
 .tf-select .tf-menu .tf-first,
 .tf-select .tf-menu .tf-group-first {
     border-top-width: 0;
 }
-
 .tf-select .tf-menu .tf-group-last,
 .tf-select .tf-menu div.tf-last {
     border-bottom-width: 0;
 }
-
 .tf-select .tf-menu ul {
     overflow: hidden;
 }
-
 .tf-select .tf-menu li.tf-last {
     margin-bottom: -1px;
 }
-
 .tf-select .tf-menu .tf-last {
     border-radius: 0 0 5px 5px;
 }
-
 .tf-select.tf-opened .tf-selected {
     border-radius: 5px 0 0 0;
 }
-
-.tf-select.tf-opened .tf-right {
+.tf-select.tf-opened .tf-button {
     border-radius: 0 5px 0 0;
 }
-
 .tf-select .tf-menu li,
 .tf-multiple.tf-focused li {
     border-bottom: 1px solid #fba121;
     border-top: 1px solid #fba121;
     margin: -1px 0;
 }
-
 .tf-select .tf-menu li > span,
 .tf-multiple li > span,
 .tf-multiple.tf-focused li > span {
@@ -236,7 +230,7 @@
     border-right: none;
 }
 .tf-multiple div.tf-first {
-    border-top:none;
+    border-top: none;
     border-radius: 5px 5px 0 0;
 }
 .tf-multiple div.tf-last {
@@ -260,17 +254,16 @@
     padding: 0;
     overflow: auto;
 }
-
 .tf-file .tf-info, .tf-file.tf-focused .tf-info {
     padding: 3px 5px;
     border-radius: 5px 0 0 5px;
     border-right: none;
 }
-
 .tf-file .tf-button {
     border-radius: 0 5px 5px 0;
     color: transparent;
     text-shadow: none;
+    padding: 3px 4px;
 }
 .tf-file .tf-button span {
     margin: 0 0 0 -4px;
@@ -298,13 +291,9 @@
     border-radius: 8px;
 }
 .tf-radio input {
-    position: absolute;
     width: 17px;
     height: 17px;
     margin: -1px 0 0 -1px;
-    padding: 0;
-    opacity: 0;
-    filter: alpha(opacity=0);
     cursor: pointer;
 }
 .tf-radio span {
@@ -328,20 +317,14 @@
     padding: 0;
     width: 15px;
     height: 15px;
+    border-radius: 3px;
 }
-
 .tf-checkbox input {
-    position: absolute;
     width: 17px;
     height: 17px;
     margin: -1px 0 0 -1px;
-    padding: 0;
-    outline: none;
-    opacity: 0;
-    filter: alpha(opacity=0);
     cursor: pointer;
 }
-
 .tf-checkbox.tf-checked span {
     width: 15px;
     height: 15px;
@@ -357,25 +340,17 @@
 /* CHECK BX - END */
 
 /* BUTTON */
-
 .tf-button {
     overflow: hidden;
     padding: 0;
 }
-
 .tf-button span {
     margin: 3px 7px;
     float: right;
 }
-
 .tf-button input,
 .tf-button button {
-    position: absolute;
-    margin: 0;
-    padding: 0;
     cursor: pointer;
-    opacity: 0;
-    filter: alpha(opacity=0);
 }
 
 /* TEXT & TEXTAREA - BEGIN */
@@ -505,11 +480,18 @@
     color: #000;
     margin: 0 3px;
 }
-
 .tf-disabled {
     opacity: .5;
     filter: alpha(opacity=50);
+}
+.tf-disabled,
+.tf-disabled input,
+.tf-disabled button,
+.tf-disabled * {
     cursor: default;
+}
+.tf-file.tf-disabled input::-webkit-file-upload-button {
+    cursor: pointer;
 }
 .tf-fieldset.tf-disabled,
 .tf-form.tf-disabled {

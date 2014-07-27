@@ -1,3 +1,11 @@
+/*!
+ * jQuery TransForm plugin v0.9
+ * 2014-07-27
+ *
+ * Copyright (c) 2010-2014 Pavel Tzonkov <sunhater@sunhater.com>
+ * Dual licensed under the MIT and GPL licenses.
+ */
+
 (function($) {
 
     var scrollbarWidth;
@@ -184,17 +192,17 @@
                         return;
                     }
 
-                    el = $('<div class="' + cls(tagName) + '"><div class="' + cls('selected') + '"><span></span></div><div class="' + cls('right') + '"><span>&nbsp;</span></div><div class="' + cls('menu') + '"></div></div>');
+                    el = $('<div class="' + cls(tagName) + '"><div class="' + cls('selected') + '"><span></span></div><div class="' + cls('button') + '"><span>&nbsp;</span></div><div class="' + cls('menu') + '"></div></div>');
 
                     var menu = el.find(sel('menu')),
                         selected = el.find(sel('selected')),
-                        right = el.find(sel('right')),
+                        button = el.find(sel('button')),
                         clicked = false;
 
                     if (t.disabled)
                         el.addClass(cls('disabled'));
 
-                    $(t).keydown(function(e) {
+                    $(t).bind('keydown.tf', function(e) {
                         var code = e.keyCode,
                             up = (code == 38),
                             down = (code == 40),
@@ -248,9 +256,9 @@
 
                         if (!tab)
                             return false;
-                    }).focus(function() {
+                    }).bind('focus.tf', function() {
                         el.addClass(cls('focused'));
-                    }).blur(function() {
+                    }).bind('blur.tf', function() {
                         setTimeout(function() {
                             if (!clicked)
                                 el.removeClass(cls('focused')).removeClass(cls('opened'));
@@ -321,7 +329,7 @@
                     };
 
                     selected.mousedown(fClick);
-                    right.mousedown(fClick);
+                    button.mousedown(fClick);
 
                     menu.find('div').mousedown(function() {
                         $(t).find('option').removeAttr('selected');
@@ -344,7 +352,7 @@
                         width: menu.outerWidth() - outerHSpace(selected)
                     });
                     el.css({
-                        width: selected.outerWidth() + right.outerWidth()
+                        width: selected.outerWidth() + button.outerWidth()
                     });
                     menu.css({
                         marginTop: el.outerHeight() - 1,
@@ -363,8 +371,14 @@
                     if (lastLi.get(0) && lastLi.next().get(0))
                         lastLi.removeClass(cls('last'));
 
-
                     update();
+
+                    t.transForm.value = function(value) {
+                        if (typeof value == "undefined")
+                            return t.value;
+                        t.value = value;
+                        update();
+                    };
                 },
 
                 multiple: function() {
@@ -434,9 +448,11 @@
                         liLast.removeClass(cls('last'));
 
                     el.find('div').mouseenter(function() {
-                        $(this).addClass(cls('hover'));
+                        if (!t.disabled)
+                            $(this).addClass(cls('hover'));
                     }).mouseleave(function() {
-                        $(this).removeClass(cls('hover'));
+                        if (!t.disabled)
+                            $(this).removeClass(cls('hover'));
                     }).click(function(e) {
                         if (t.disabled)
                             return false;
@@ -470,26 +486,55 @@
                         el.scrollTop(top);
                     });
 
-                    $(t).focus(function() {
+                    $(t).bind('focus.tf', function() {
                         el.addClass(cls('focused'));
-                    }).blur(function() {
+                    }).bind('blur.tf', function() {
                         el.removeClass(cls('focused'))
-                    }).change(function() {
+                    }).bind('change.tf', function() {
                         $(t).find('option').each(function(i) {
                             var div = el.find(sel('index-') + i);
                             if (this.selected)
                                 div.addClass(cls('selected'));
                             else
                                 div.removeClass(cls('selected'));
-
                         });
                     });
+
+                    t.transForm.values = function(values) {
+
+                        // Get values
+                        if (typeof values == "undefined") {
+                            var ret = [];
+                            $(t).find('option:selected').each(function() {
+                                ret.push(this.value);
+                            });
+                            return ret;
+                        }
+
+                        if (!$.isArray(values))
+                            return;
+
+                        // Set values
+                        $(t).find('option').attr({selected: false});
+                        el.find('div').removeClass(cls('selected'));
+
+                        $.each(values, function(j, v) {
+                            $(t).find('option').each(function(i) {
+                                if (this.value === v) {
+                                    this.selected = true;
+                                    el.find(sel('index-') + i).addClass(cls('selected'));
+                                }
+                            });
+                        });
+                    };
                 },
 
                 textarea: function() {
 
                     if (construct || destruct)
                         $(t).css({
+                            overflow: '',
+                            height: '',
                             borderTopRightRadius: '',
                             borderBottomRightRadius: '',
                             borderBottomLeftRadius: ''
@@ -544,7 +589,7 @@
                             t.value = t.value.substr(0, maxLength);
                     };
 
-                    u(); $(t).keyup(u).keydown(u).change(u).scroll(u);
+                    u(); $(t).bind('keyup.tf', u).bind('keydown.tf', u).bind('change.tf', u).bind('scroll.tf', u);
                 },
 
                 button: function() {
@@ -564,11 +609,11 @@
                         height: el.innerHeight() + outerVSpace(el),
                         marginLeft: - parseInt(el.css('borderLeftWidth')),
                         marginTop: - parseInt(el.css('borderTopWidth'))
-                    }).focus(function() {
+                    }).bind('focus.tf', function() {
                         el.addClass(cls('focused'));
-                    }).blur(function() {
+                    }).bind('blur.tf', function() {
                         el.removeClass(cls('focused'));
-                    }).mousedown(function() {
+                    }).bind('mousedown.tf', function() {
                         el.addClass(cls('focused'));
                     });
                 },
@@ -592,29 +637,28 @@
 
                     var info = el.find(sel('info')),
                         button = el.find(sel('button')),
-                        input = el.find('input'),
                         u = function() {
-                            var files = this.files;
+                            var files = t.files;
                             if (!files || (files.length <= 0))
                                 info.find('span').html(o.file.noFile);
                             else
                                 info.find('span').text((files.length == 1) ? files[0]['name'] : o.file.count.replace('{count}', files.length));
-                            el.attr('label', input.attr('label'))
+                            el.attr('label', $(t).attr('label'))
                         };
 
                     info.css({
                         width: el.innerWidth() - button.outerWidth() - outerHSpace(info)
                     });
 
-                    input.css({
+                    $(t).css({
                         width: el.outerWidth(),
                         height: el.outerHeight()
-                    }).focus(function() {
+                    }).bind('focus.tf', function() {
                         $(sel('focused')).removeClass(cls('focused'));
                         el.addClass(cls('focused'));
-                    }).blur(function() {
+                    }).bind('blur.tf', function() {
                         el.removeClass(cls('focused'));
-                    }).change(u).click(function() {
+                    }).bind('change.tf', u).bind('click.tf', function() {
                         t.focus();
                     });
 
@@ -637,18 +681,25 @@
                                 el.removeClass(cls('checked'));
                         };
 
-                    $(t).after(el).detach().appendTo(el).focus(function() {
+                    $(t).after(el).detach().appendTo(el).bind('focus.tf', function() {
                         el.addClass(cls('focused'));
-                    }).blur(function() {
+                    }).bind('blur.tf', function() {
                         el.removeClass(cls('focused'));
-                    }).click(function() {
+                    }).bind('click.tf', function() {
                         u();
                         $(sel('focused')).removeClass(cls('focused'));
                         el.addClass(cls('focused'));
                         t.focus();
-                    }).change(u);
+                    }).bind('change.tf', u);
 
                     u();
+
+                    t.transForm.checked = function(checked) {
+                        if (typeof checked == "undefined")
+                            return t.checked;
+                        t.checked = !!checked;
+                        u();
+                    };
                 },
 
                 radio: function() {
@@ -676,16 +727,24 @@
                                 $(radios).parent().removeClass(cls('focused'));
                         };
 
-                    $(t).after(el).detach().appendTo(el).focus(function() {
+                    $(t).after(el).detach().appendTo(el).bind('focus.tf', function() {
                         f(true);
-                    }).blur(function() {
+                    }).bind('blur.tf', function() {
                         f(false);
-                    }).click(function() {
+                    }).bind('click.tf', function() {
                         u();
                         f(true);
-                    }).change(u);
+                        t.focus();
+                    }).bind('change.tf', u);
 
                     u();
+
+                    t.transForm.checked = function(checked) {
+                        if (typeof checked == "undefined")
+                            return t.checked;
+                        t.checked = !!checked;
+                        u();
+                    };
                 },
 
                 submit: function() {
@@ -701,6 +760,18 @@
                 }
             };
 
+            if (typeof t.transForm == "undefined")
+                t.transForm = {
+                    disable: function(disabled) {
+                        var target = el ? el : t;
+                        t.disabled = !!disabled;
+                        if (!!disabled)
+                            target.addClass(cls('disabled'));
+                        else
+                            target.removeClass(cls('disabled'));
+                    }
+                };
+
             build[tagName]();
 
             // Common Construct
@@ -713,15 +784,24 @@
 
             // Common Destruct
             if (destruct) {
-                $(t).removeData('transForm');
+                $(t).removeData('transForm').unbind('.tf');
                 if (el) {
                     $(t).detach();
                     el.after(t).detach();
                 }
+                if (typeof t.transForm != "undefined")
+                    delete t.transForm;
+                var classes = $(t).attr('class');
+                if (!classes)
+                    return;
+                $.each(classes.split(/\s+/g), function(i, c) {
+                    if (c.substr(0, prefix.length) == prefix)
+                        $(t).removeClass(c);
+                });
             }
 
             // Toggle disabled
-            if (typeof o.disabled != 'undefined') {
+            if (typeof o.disabled != "undefined") {
                 t.disabled = !!o.disabled;
                 if (!el)
                     el = $(t);
@@ -729,6 +809,29 @@
                     el.addClass(cls('disabled'));
                 else
                     el.removeClass(cls('disabled'));
+            }
+
+            // Toggle read-only
+            if ((typeof o.readonly != "undefined") &&
+                (
+                    (tagName == "textarea") ||
+                    (
+                        (tagName == "input") &&
+                        (
+                            (type == "text") ||
+                            (type == "password")
+                        )
+                    )
+                )
+            ) {
+                var readonly = !!o.readonly;
+                $(t).attr({readonly: readonly});
+                if (!transForm)
+                    return;
+                if (readonly)
+                    $(t).addClass(cls('readOnly'));
+                else
+                    $(t).removeClass(cls('readOnly'));
             }
         });
         return $(this);
