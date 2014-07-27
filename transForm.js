@@ -34,7 +34,7 @@
         }
 
         var tags = "|form|fieldset|input|select|textarea|button|label|",
-            types = "|button|text|file|checkbox|radio|submit|reset|password|",
+            inputs = "|text|password|color|datetime|datetime-local|email|month|number|range|search|tel|time|url|week|",
             o = {
                 cssPrefix: "tf-",
                 file: {
@@ -93,6 +93,26 @@
 
         outerVSpace = function(selector, mbp) {
             return (outerTopSpace(selector, mbp) + outerBottomSpace(selector, mbp));
+        },
+
+        disablePageScroll = function(selector) {
+            var evts = 'mousewheel.tf DOMMouseScroll.tf';
+            $(selector).unbind(evts).bind(evts, function(e) {
+                var e0 = e.originalEvent,
+                    delta = e0.wheelDelta || -e0.detail;
+                this.scrollTop += ((delta < 0) ? 1 : -1) * 30;
+                e.preventDefault();
+            });
+        },
+
+        disableSelect = function(selector) {
+            $(selector).each(function() {
+                var evts = 'selectstart.tf';
+                $(this).css('MozUserSelect', "none");
+                $(this).unbind(evts).bind(evts, function() {
+                    return false;
+                });
+            });
         };
 
         $.extend(true, o, options);
@@ -176,8 +196,16 @@
                 },
 
                 input: function() {
-                    if (types.indexOf("|" + type + "|") != -1)
-                        this[type]();
+                    if (type == "button")
+                        this.button();
+                    else {
+                        toggleClass(t, cls("input"));
+                        toggleClass(t, cls(type));
+                        if (t.readonly && (type != 'color'))
+                            toggleClass(t, cls('readOnly'));
+                        if (this[type])
+                            this[type]();
+                    }
                 },
 
                 select: function() {
@@ -321,11 +349,12 @@
                                 if (el.hasClass(cls('opened')) && (div.scrollHeight > div.clientHeight)) {
                                     menu.css({borderBottomRightRadius: 0});
                                     menu.find(sel('last')).css({borderBottomRightRadius: 0});
+                                    disablePageScroll(menu);
                                 }
                                 clicked = false;
                             }, 200);
                         }
-
+                        return true;
                     };
 
                     selected.mousedown(fClick);
@@ -372,6 +401,8 @@
                         lastLi.removeClass(cls('last'));
 
                     update();
+
+                    disableSelect(el);
 
                     t.transForm.value = function(value) {
                         if (typeof value == "undefined")
@@ -430,6 +461,7 @@
 
                     el.data({count: count});
                     $(t).after(el).detach().prependTo(el);
+                    disableSelect(el);
 
                     var div = el.get(0);
                     if (div.scrollHeight > div.clientHeight) {
@@ -441,6 +473,7 @@
                         el.find('div' + sel('first')).css({borderTopRightRadius: 0});
                         el.find('div' + sel('last')).css({borderBottomRightRadius: 0});
                         el.find('li' + sel('last')).css({borderBottomRightRadius: 0});
+                        disablePageScroll(el);
                     }
 
                     var liLast = el.find('li' + sel('last'));
@@ -618,12 +651,6 @@
                     });
                 },
 
-                text: function() {
-                    toggleClass(t, cls("text"));
-                    if (t.readOnly)
-                        toggleClass(t, cls('readOnly'));
-                },
-
                 file: function() {
 
                     if (!construct) {
@@ -679,16 +706,27 @@
                                 el.addClass(cls('checked'));
                             else
                                 el.removeClass(cls('checked'));
-                        };
+                        },
+                        label = $(t).attr('id');
+                    if (label)
+                        label = $('label[for="' + label + '"]');
+
+                    disableSelect(label);
 
                     $(t).after(el).detach().appendTo(el).bind('focus.tf', function() {
                         el.addClass(cls('focused'));
+                        if (label.get(0))
+                            label.addClass(cls('focused'));
                     }).bind('blur.tf', function() {
                         el.removeClass(cls('focused'));
+                        if (label.get(0))
+                            label.removeClass(cls('focused'));
                     }).bind('click.tf', function() {
                         u();
                         $(sel('focused')).removeClass(cls('focused'));
                         el.addClass(cls('focused'));
+                        if (label.get(0))
+                            label.addClass(cls('focused'));
                         t.focus();
                     }).bind('change.tf', u);
 
@@ -721,11 +759,30 @@
                             });
                         },
                         f = function(focused) {
-                            if (focused)
+                            if (focused) {
                                 $(radios).parent().addClass(cls('focused'));
-                            else
+                                $.each(labels, function(i, l) {
+                                    l.addClass(cls('focused'));
+                                });
+                            } else {
                                 $(radios).parent().removeClass(cls('focused'));
-                        };
+                                $.each(labels, function(i, l) {
+                                    l.removeClass(cls('focused'));
+                                });
+                            }
+                        },
+                        labels = [];
+
+                    $.each(radios, function(i, r) {
+                        var label = $(r).attr('id');
+                        if (!label)
+                            return;
+                        label = $('label[for="' + label +'"]');
+                        if (!label.get(0))
+                            return;
+                        labels.push(label);
+                        disableSelect(label);
+                    });
 
                     $(t).after(el).detach().appendTo(el).bind('focus.tf', function() {
                         f(true);
@@ -748,15 +805,11 @@
                 },
 
                 submit: function() {
-                    return this.button();
+                    this.button();
                 },
 
                 reset: function() {
-                    return this.button();
-                },
-
-                password: function() {
-                    return this.text();
+                    this.button();
                 }
             };
 
@@ -769,6 +822,12 @@
                             target.addClass(cls('disabled'));
                         else
                             target.removeClass(cls('disabled'));
+                    },
+                    destruct: function() {
+                        destruct = true;
+                        construct = false;
+                        build[tagName]();
+                        destructFunc();
                     }
                 };
 
@@ -783,7 +842,7 @@
             }
 
             // Common Destruct
-            if (destruct) {
+            var destructFunc = function() {
                 $(t).removeData('transForm').unbind('.tf');
                 if (el) {
                     $(t).detach();
@@ -798,7 +857,9 @@
                     if (c.substr(0, prefix.length) == prefix)
                         $(t).removeClass(c);
                 });
-            }
+            };
+            if (destruct)
+                destructFunc();
 
             // Toggle disabled
             if (typeof o.disabled != "undefined") {
@@ -817,10 +878,8 @@
                     (tagName == "textarea") ||
                     (
                         (tagName == "input") &&
-                        (
-                            (type == "text") ||
-                            (type == "password")
-                        )
+                        (type != "color") &&
+                        (inputs.indexOf('|' + type + '|') !== -1)
                     )
                 )
             ) {

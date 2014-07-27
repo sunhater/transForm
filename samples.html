@@ -12,7 +12,7 @@ fieldset, .tf-fieldset {
     float: left;
     margin-right: 10px;
 }
-.tf-text, .tf-textarea {
+form .tf-text, .tf-textarea {
     width: 200px;
 }
 .tf-select .tf-menu {
@@ -22,6 +22,7 @@ fieldset, .tf-fieldset {
     <script type="text/javascript">
 $(function() {
     var transform = function() {
+            $('#html5').transForm();
             $($('form')[0]).transForm();
             $($('form')[1]).transForm({
                 textarea: {
@@ -36,7 +37,7 @@ $(function() {
     transform();
     $('#transForm').click(function() {
         if (transformed) {
-            $('form').transForm(false);
+            $('form, #html5').transForm(false);
             $('#disable, #ro').attr({disabled:true});
         } else {
             transform();
@@ -48,18 +49,14 @@ $(function() {
         if (!transformed)
             return;
         disabled = !disabled;
-        $('form').transForm({disabled: disabled});
+        $('form, #html5').transForm({disabled: disabled});
     });
     $('#ro').click(function() {
         if (!transformed)
             return;
         readonly = !readonly;
-        $('form').transForm({readonly: readonly});
+        $('form, #html5').transForm({readonly: readonly});
     });
-
-    setTimeout(function() {
-        $('input[type="radio"]').get(3).transForm.checked(true);
-    }, 2000);
 });
 
 
@@ -92,7 +89,7 @@ $(function() {
             <td><input type="checkbox" name="checkbox" checked id="ch1" /><label for="ch1">Check box</label></td>
           </tr>
           <tr>
-            <td><select name="multiple" multiple>
+            <td><select name="multiple[]" multiple>
                 <option value="1">Option 1</option>
                 <option value="2" selected>Option 2</option>
                 <option value="3">Option 3</option>
@@ -164,9 +161,28 @@ $(function() {
       </fieldset>
     </form>
 
+      <fieldset id="html5">
+        <legend>HTML5</legend>
+        <table>
+          <tr><td><input type="color" /></td><td>color</td></tr>
+          <tr><td><input type="datetime" /></td><td>datetime</td></tr>
+          <tr><td><input type="datetime-local" /></td><td>datetime-local</td></tr>
+          <tr><td><input type="email" /></td><td>email</td></tr>
+          <tr><td><input type="month" /></td><td>month</td></tr>
+          <tr><td><input type="number" /></td><td>number</td></tr>
+          <tr><td><input type="range" /></td><td>range</td></tr>
+          <tr><td><input type="search" /></td><td>search</td></tr>
+          <tr><td><input type="tel" /></td><td>tel</td></tr>
+          <tr><td><input type="time" /></td><td>time</td></tr>
+          <tr><td><input type="url" /></td><td>url</td></tr>
+          <tr><td><input type="week" /></td><td>week</td></tr>
+        </table>
+      </fieldset>
+
+
   <button id="transForm">Toggle transForm</button><br />
   <button id="disable">Toggle disable</button><br />
-  <button id="ro">Toggle read-only</button>
+  <button id="ro">Toggle read-only</button><br />
 
   </body>
 </html>

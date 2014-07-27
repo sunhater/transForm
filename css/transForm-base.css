@@ -37,8 +37,8 @@
 
 .tf-select select,
 .tf-multiple select {
-    position: fixed;
-    top: -1000px;
+    position: absolute;
+    left: -1000000px;
     opacity: 0;
     filter: alpha(opacity=0);
 }
@@ -75,7 +75,7 @@
 .tf-button input,
 .tf-button button {
     position: absolute;
-    opacity: .0;
+    opacity: 0;
     filter: alpha(opacity=0);
     outline: none;
     margin: 0;
