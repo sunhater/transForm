@@ -1,6 +1,6 @@
 /*!
- * jQuery TransForm plugin v0.9
- * 2014-07-27
+ * jQuery TransForm plugin v1.0
+ * 2014-08-01
  *
  * Copyright (c) 2010-2014 Pavel Tzonkov <sunhater@sunhater.com>
  * Dual licensed under the MIT and GPL licenses.
@@ -199,12 +199,19 @@
                     if (type == "button")
                         this.button();
                     else {
-                        toggleClass(t, cls("input"));
-                        toggleClass(t, cls(type));
-                        if (t.readonly && (type != 'color'))
-                            toggleClass(t, cls('readOnly'));
                         if (this[type])
                             this[type]();
+                        if (!el) {
+                            toggleClass(t, cls("input"));
+                            toggleClass(t, cls(type));
+                        }
+                        t.transForm.readOnly = function(readOnly) {
+                            t.readOnly = readOnly;
+                            if (readOnly)
+                                $(t).addClass(cls('readOnly'));
+                            else
+                                $(t).removeClass(cls('readOnly'));
+                        };
                     }
                 },
 
@@ -226,9 +233,6 @@
                         selected = el.find(sel('selected')),
                         button = el.find(sel('button')),
                         clicked = false;
-
-                    if (t.disabled)
-                        el.addClass(cls('disabled'));
 
                     $(t).bind('keydown.tf', function(e) {
                         var code = e.keyCode,
@@ -575,9 +579,6 @@
 
                     toggleClass(t, cls(tagName));
 
-                    if (t.readOnly)
-                        toggleClass(t, cls('readOnly'));
-
                     if (!construct)
                         return;
 
@@ -592,7 +593,7 @@
                             if (t.clientHeight >= t.scrollHeight)
                                 $(t).css({height: 1});
 
-                            $(t).css({height: t.scrollHeight + outerVSpace($(t), 'b')});
+                            $(t).css({height: t.scrollHeight + (document.doctype ? -outerVSpace($(t), 'p') : outerVSpace($(t), 'b'))});
                         };
 
                     } else
@@ -623,6 +624,14 @@
                     };
 
                     u(); $(t).bind('keyup.tf', u).bind('keydown.tf', u).bind('change.tf', u).bind('scroll.tf', u);
+
+                    t.transForm.readOnly = function(readOnly) {
+                        t.readOnly = readOnly;
+                        if (readOnly)
+                            $(t).addClass(cls('readOnly'));
+                        else
+                            $(t).removeClass(cls('readOnly'));
+                    };
                 },
 
                 button: function() {
@@ -835,6 +844,11 @@
 
             // Common Construct
             if (construct) {
+                var target = el ? el : $(t);
+                if (t.disabled)
+                    target.addClass(cls('disabled'));
+                if (t.readOnly)
+                    target.addClass(cls('readOnly'));
                 data.set({
                     prefix: prefix,
                     transformed: true
@@ -864,16 +878,15 @@
             // Toggle disabled
             if (typeof o.disabled != "undefined") {
                 t.disabled = !!o.disabled;
-                if (!el)
-                    el = $(t);
+                var target = el ? el : $(t);
                 if (o.disabled)
-                    el.addClass(cls('disabled'));
+                    target.addClass(cls('disabled'));
                 else
-                    el.removeClass(cls('disabled'));
+                    target.removeClass(cls('disabled'));
             }
 
             // Toggle read-only
-            if ((typeof o.readonly != "undefined") &&
+            if ((typeof o.readOnly != "undefined") &&
                 (
                     (tagName == "textarea") ||
                     (
@@ -883,7 +896,7 @@
                     )
                 )
             ) {
-                var readonly = !!o.readonly;
+                var readonly = !!o.readOnly;
                 $(t).attr({readonly: readonly});
                 if (!transForm)
                     return;
