@@ -35,7 +35,8 @@
         }
 
         var tags = "|form|fieldset|input|select|textarea|button|label|",
-            inputs = "|text|password|color|datetime|datetime-local|email|month|number|range|search|tel|time|url|week|",
+            fields = "|text|password|color|datetime|datetime-local|email|month|number|range|search|tel|time|url|week|",
+            buttons = "|button|submit|reset|",
             o = {
                 cssPrefix: "tf-",
                 file: {
@@ -197,15 +198,15 @@
                 },
 
                 input: function() {
-                    if (type == "button")
-                        this.button();
-                    else {
-                        if (this[type])
-                            this[type]();
-                        if (!el) {
-                            toggleClass(t, cls("input"));
-                            toggleClass(t, cls(type));
-                        }
+                    if (this[type])
+                        this[type]();
+
+                    if (!el) {
+                        toggleClass(t, cls("input"));
+                        toggleClass(t, cls(type));
+                    }
+
+                    if (fields.indexOf('|' + type + '|') !== -1)
                         t.transForm.readOnly = function(readOnly) {
                             t.readOnly = readOnly;
                             if (readOnly)
@@ -213,7 +214,6 @@
                             else
                                 $(t).removeClass(cls('readOnly'));
                         };
-                    }
                 },
 
                 select: function() {
@@ -892,8 +892,7 @@
                     (tagName == "textarea") ||
                     (
                         (tagName == "input") &&
-                        (type != "color") &&
-                        (inputs.indexOf('|' + type + '|') !== -1)
+                        (fields.indexOf('|' + type + '|') !== -1)
                     )
                 )
             ) {
