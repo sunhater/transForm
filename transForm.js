@@ -325,7 +325,7 @@
 
                     var update = function() {
                         var text = $(t).find('option:selected').text();
-                        el.find(sel('selected') + ' span').html(text);
+                        el.find(sel('selected') + ' span').text(text);
                     },
 
                     selectCurrent = function() {
@@ -366,14 +366,18 @@
                     button.mousedown(fClick);
 
                     menu.find('div').mousedown(function() {
+                        var oldOpt = $(t).find('option:selected').get(0),
+                            newOpt = $(this).data('option');
                         $(t).find('option').removeAttr('selected');
-                        $(this).data('option').selected = true;
+                        newOpt.selected = true;
                         update();
                         clicked = true;
                         el.removeClass(cls('opened'));
                         setTimeout(function() {
                             t.focus();
                             clicked = false;
+                            if (oldOpt !== newOpt)
+                                $(t).trigger('change');
                         }, 200);
                     }).mouseover(function() {
                         menu.find('div').removeClass(cls('hover'));
@@ -516,6 +520,7 @@
                                 }
                             }
                         }
+                        $(t).trigger('change');
                     });
 
                     el.click(function() {
