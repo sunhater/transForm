@@ -389,9 +389,12 @@
                     selected.css({
                         width: menu.outerWidth() - outerHSpace(selected)
                     });
-                    el.css({
-                        width: selected.outerWidth() + button.outerWidth()
-                    });
+                    var i = 0;
+                    do {
+                       el.css({
+                            width: selected.outerWidth() + button.outerWidth() + i++
+                       });
+                    } while ((selected.offset().top != button.offset().top) && (i < 10000));
                     menu.css({
                         marginTop: el.outerHeight() - 1,
                         width: el.outerWidth() - outerHSpace(menu)
@@ -416,6 +419,7 @@
                     t.transForm.value = function(value) {
                         if (typeof value == "undefined")
                             return t.value;
+                        var oldValue = t.value;
                         t.value = value;
                         update();
                     };
@@ -688,9 +692,12 @@
                             el.attr('label', $(t).attr('label'))
                         };
 
-                    info.css({
-                        width: el.innerWidth() - button.outerWidth() - outerHSpace(info)
-                    });
+                    var i = 0;
+                    do {
+                        info.css({
+                            width: el.innerWidth() - button.outerWidth() - outerHSpace(info) - i++
+                        });
+                    } while ((info.offset().top != button.offset().top) && (i < 10000));
 
                     $(t).css({
                         width: el.outerWidth(),
